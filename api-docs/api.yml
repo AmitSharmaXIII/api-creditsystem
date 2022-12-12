@@ -1,0 +1,163 @@
+openapi: 3.0.1
+info:
+  title:  api-creditcards
+  description: API provides basic functionality storing and reading valid creditcards numbers in inmemorydb.
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:3000'
+    description: Local server
+tags:
+  - name: CreditCards
+    description: Methods covering functionality for Creditcard management.
+
+paths:
+  /api/v1/creditcards:
+    post:
+      summary: For storing new creditcard
+      description: Validates a creditcard using Luhn 10 Alogrithm and stories in loki inmemory db.
+      operationId: postCredit
+      tags:
+        - CreditCards
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCard'
+      responses:
+        201:
+          description: Success
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/CreditCard'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+    get:
+      summary: For fetching list of credit cards
+      operationId: getCredits
+      tags:
+        - CreditCards
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCards'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/v3/creditcards/{id}:
+    get:
+      summary: For fetching a creditcard info
+      operationId: getCreditCardById
+      tags:
+        - CreditCards
+      parameters:
+        - name: id
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCard'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  responses:
+    NoContent:
+      description: No Content
+      content:
+        {}
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+         
+  schemas:
+    Health:
+      properties:
+        status:
+          type: string
+        ts:
+          type: integer
+    CreditCard:
+      properties:
+        id:
+          type: string
+          description: Unique Identifier of the creditcards which is stored in db.
+          readOnly: true
+        name:
+          type: string
+          description: Name of the credit card holder.
+          minLength: 1
+          maxLength: 155
+        cardNumber:
+          type: number
+          description: cardNumber of creditcard
+        limit:
+          type: number
+          description: max limit of credit cards
+          default: 0
+      required:
+        - name
+        - cardNumber
+    CreditCards:
+      properties:
+        total:
+          type: integer
+          description: total number of Items available
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditCard'
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            properties:
+              value:
+                type: string
+              msg:
+                type: string
+              param:
+                type: string
+              location:
+                type: string
