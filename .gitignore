@@ -1,0 +1,8 @@
+node_modules
+coverage
+yarn-error.log
+aws.json
+*.key
+api-*.json
+package-lock.json
+.env

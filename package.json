@@ -1,0 +1,35 @@
+{
+  "name": "api-creditsystem",
+  "version": "1.0.0",
+  "description": "API for managing creditcard details.",
+  "main": "index.js",
+  "scripts": {
+    "ds": "nodemon index.js",
+    "test": "jest --watchAll"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-openapi": "^12.1.0",
+    "express-validator": "^6.14.2",
+    "lokijs": "^1.5.12",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "jest": "^29.2.1",
+    "supertest": "^6.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmitSharmaXIII/api-creditsystem.git"
+  },
+  "author": "AmitSharmaXIII",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AmitSharmaXIII/api-creditsystem/issues"
+  },
+  "homepage": "https://github.com/AmitSharmaXIII/api-creditsystem#readme"
+}

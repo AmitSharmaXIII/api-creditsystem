@@ -1,2 +1,2 @@
 # api-creditsystem
-Methods for managing creditcard details.
+API for managing creditcard details.
