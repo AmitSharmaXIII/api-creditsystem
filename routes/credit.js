@@ -7,7 +7,7 @@ const { luhnAlgoCheck } = require('../utils/util.js');
 /* POST creditcards */
 router.post('/',
   check('name').isLength({ min: 1 }).withMessage('name field must be at least 1 chars long'),
-  check('cardNumber').exists().withMessage('card number is mandatory').isInt().withMessage('must be numeric'),
+  check('cardNumber').exists().withMessage('card number is mandatory').isInt().withMessage('must be numeric').isLength({ max: 19 }).withMessage('must within 19 chars'),
   check('limit').optional().isInt().withMessage('must be numeric'),
   async function (req, res, next) {
 
